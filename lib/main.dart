@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
+// import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:first_app/view/custom_text_field_widget.dart';
 import 'package:first_app/view/custom_profile_image_widget.dart';
 import 'package:first_app/view/custom_dropdown_widget.dart';
 import 'package:first_app/view/custom_phone_field_widget.dart';
 import 'package:first_app/view/custom_appbar_widget.dart';
+import 'package:first_app/pages/user_profile.dart';
 
 void main() {
-  runApp(const MaterialApp(
+  runApp(MaterialApp(
     home: MyApp(),
   ));
 }
@@ -20,6 +21,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  var nameController = TextEditingController();
+  var aboutController = TextEditingController();
   String? _selectedGender;
 
   @override
@@ -34,11 +37,21 @@ class _MyAppState extends State<MyApp> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const ProfileImage(),
-              const CustomTextField(hintText: 'what is your last name '),
+              // Container(
+              //   child: CustomTextField(
+              //     hintText: 'name ',
+              //     nameController: nameController,
+              //   ),
+              // ),
+              CustomTextField(
+                hintText: 'what is your last name ',
+                nameController: nameController,
+              ),
               Container(
                 height: 40,
               ),
-              const CustomTextField(hintText: 'about me'),
+              CustomTextField(
+                  hintText: 'about me', nameController: aboutController),
               Container(
                 height: 40,
               ),
@@ -57,7 +70,19 @@ class _MyAppState extends State<MyApp> {
                 height: 30,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  // print("name is ${nameController.text}");
+                  print('name is+${aboutController.text}');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UserProfile(
+                        nameOfPerson: nameController.text,
+                        aboutMe: aboutController.text,
+                      ),
+                    ),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
                   backgroundColor: Colors.blue, // Text color

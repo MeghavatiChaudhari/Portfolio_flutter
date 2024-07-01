@@ -2,11 +2,22 @@ import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hintText;
-  const CustomTextField({Key? key, required this.hintText}) : super(key: key);
+  final TextEditingController nameController;
+  // final TextEditingController aboutController;
+  // var nameController = TextEditingController();
+  CustomTextField(
+      {Key? key, required this.hintText, required this.nameController})
+      : super(key: key);
+
+//    const CustomTextField({
+//     Key? key,
+//      required this.hintText,
+//      this.controller,
+// }):super(key:key);
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return TextField(
       decoration: InputDecoration(
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(2),
@@ -20,7 +31,7 @@ class CustomTextField extends StatelessWidget {
             )),
         hintText: hintText,
       ),
-      textAlign: TextAlign.left,
+      controller: nameController,
     );
   }
 }
