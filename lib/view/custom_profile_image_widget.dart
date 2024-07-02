@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:first_app/pages/user_profile.dart';
+import 'package:first_app/pages/user_profile_page.dart';
 
 class ProfileImage extends StatelessWidget {
   // final String name;

@@ -5,7 +5,7 @@ import 'package:first_app/view/custom_profile_image_widget.dart';
 import 'package:first_app/view/custom_dropdown_widget.dart';
 import 'package:first_app/view/custom_phone_field_widget.dart';
 import 'package:first_app/view/custom_appbar_widget.dart';
-import 'package:first_app/pages/user_profile.dart';
+import 'package:first_app/pages/user_profile_page.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -24,6 +24,7 @@ class _MyAppState extends State<MyApp> {
   var nameController = TextEditingController();
   var aboutController = TextEditingController();
   String? _selectedGender;
+  String? _contactNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +66,13 @@ class _MyAppState extends State<MyApp> {
               Container(
                 height: 40,
               ),
-              const CustomPhoneFieldWidget(),
+              CustomPhoneFieldWidget(
+                onChanged: (String newNumber) {
+                  setState(() {
+                    _contactNumber = newNumber;
+                  });
+                },
+              ),
               Container(
                 height: 30,
               ),
@@ -79,6 +86,8 @@ class _MyAppState extends State<MyApp> {
                       builder: (context) => UserProfile(
                         nameOfPerson: nameController.text,
                         aboutMe: aboutController.text,
+                        gender: _selectedGender ?? 'Not Specified',
+                        contactNumber: _contactNumber ?? 'Not Provided',
                       ),
                     ),
                   );
