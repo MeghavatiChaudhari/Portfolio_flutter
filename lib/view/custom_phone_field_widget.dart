@@ -3,8 +3,10 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
 
 class CustomPhoneFieldWidget extends StatelessWidget {
+  final String? initialValue;
   final ValueChanged<String> onChanged;
-  const CustomPhoneFieldWidget({Key? key, required this.onChanged})
+  const CustomPhoneFieldWidget(
+      {Key? key, this.initialValue, required this.onChanged})
       : super(key: key);
 
   @override
@@ -16,6 +18,8 @@ class CustomPhoneFieldWidget extends StatelessWidget {
           borderSide: BorderSide(color: Colors.black, width: 5),
         ),
       ),
+      initialCountryCode: 'IN',
+      initialValue: initialValue,
       onChanged: (PhoneNumber? phone) {
         if (phone != null) {
           onChanged(phone.completeNumber);

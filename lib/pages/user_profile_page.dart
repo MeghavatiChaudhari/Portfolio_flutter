@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import '../view/custom_profile_image_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../main.dart';
+import 'package:first_app/pages/edit_profile_page.dart';
 
 class UserProfile extends StatefulWidget {
   final String nameOfPerson;
@@ -20,12 +23,32 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
+  String _name = '';
+  String _about = '';
+  String _gender = '';
+  String _contact = '';
+
+  void initState() {
+    super.initState();
+    _loadProfileData();
+  }
+
+  Future<void> _loadProfileData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _name = prefs.getString('name') ?? 'Not provided';
+      _about = prefs.getString('about') ?? 'Not provided';
+      _gender = prefs.getString('gender') ?? 'Not provided';
+      _contact = prefs.getString('contact') ?? 'Not provided';
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Welcome ${widget.nameOfPerson}',
+          'Welcome $_name',
           style: TextStyle(
             color: Colors.white,
             fontSize: 25.0,
@@ -53,7 +76,7 @@ class _UserProfileState extends State<UserProfile> {
               ),
               alignment: Alignment.centerLeft,
               child: Text(
-                'Name: ${widget.nameOfPerson}',
+                'Name: $_name',
                 style: TextStyle(
                   color: Colors.black87,
                   fontSize: 25,
@@ -85,7 +108,7 @@ class _UserProfileState extends State<UserProfile> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    widget.aboutMe,
+                    _about,
                     style: TextStyle(
                       color: Colors.black87,
                       fontSize: 18,
@@ -105,7 +128,7 @@ class _UserProfileState extends State<UserProfile> {
               ),
               alignment: Alignment.centerLeft,
               child: Text(
-                'Gender: ${widget.gender}',
+                'Gender: $_gender',
                 style: TextStyle(
                   color: Colors.black87,
                   fontSize: 25,
@@ -124,7 +147,7 @@ class _UserProfileState extends State<UserProfile> {
               ),
               alignment: Alignment.centerLeft,
               child: Text(
-                'Contact No: ${widget.contactNumber}',
+                'Contact No: $_contact',
                 style: TextStyle(
                   color: Colors.black87,
                   fontSize: 25,
@@ -140,12 +163,7 @@ class _UserProfileState extends State<UserProfile> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => UserProfile(
-                        // nameOfPerson: nameController.text,
-                        // aboutMe: aboutController.text,
-                        // gender: _selectedGender ?? 'Not Specified',
-                        // contactNumber: _contactNumber ?? 'Not Provided',
-                        ),
+                    builder: (context) => EditProfile(),
                   ),
                 );
               },

@@ -6,6 +6,7 @@ import 'package:first_app/view/custom_dropdown_widget.dart';
 import 'package:first_app/view/custom_phone_field_widget.dart';
 import 'package:first_app/view/custom_appbar_widget.dart';
 import 'package:first_app/pages/user_profile_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -26,6 +27,14 @@ class _MyAppState extends State<MyApp> {
   String? _selectedGender;
   String? _contactNumber;
 
+  Future<void> _saveProfileData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('name', nameController.text);
+    await prefs.setString('about', aboutController.text);
+    await prefs.setString('gender', _selectedGender ?? 'Not specified');
+    await prefs.setString('contact', _contactNumber ?? 'not provided');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,12 +47,6 @@ class _MyAppState extends State<MyApp> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const ProfileImage(),
-              // Container(
-              //   child: CustomTextField(
-              //     hintText: 'name ',
-              //     nameController: nameController,
-              //   ),
-              // ),
               CustomTextField(
                 hintText: 'what is your last name ',
                 nameController: nameController,
@@ -77,9 +80,10 @@ class _MyAppState extends State<MyApp> {
                 height: 30,
               ),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   // print("name is ${nameController.text}");
                   print('name is+${aboutController.text}');
+                  await _saveProfileData();
                   Navigator.push(
                     context,
                     MaterialPageRoute(
