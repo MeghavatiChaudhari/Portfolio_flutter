@@ -1,3 +1,4 @@
+import 'package:first_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import '../view/custom_profile_image_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -157,7 +158,7 @@ class _UserProfileState extends State<UserProfile> {
                 ),
               ),
             ),
-            const SizedBox(height: 100),
+            const SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -171,7 +172,7 @@ class _UserProfileState extends State<UserProfile> {
                 foregroundColor: Colors.white,
                 backgroundColor: Colors.blue, // Text color
                 padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -183,7 +184,36 @@ class _UserProfileState extends State<UserProfile> {
                     letterSpacing: 1.0,
                     fontFamily: 'Roboto',
                   )),
-            )
+            ),
+            const SizedBox(height: 40),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HomeScreen(),
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.blue, // Text color
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: const Text(
+                'Goto MyWeatherApp',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.normal,
+                  letterSpacing: 1.0,
+                  fontFamily: 'Roboto',
+                ),
+              ),
+            ),
           ],
         ),
       ),
