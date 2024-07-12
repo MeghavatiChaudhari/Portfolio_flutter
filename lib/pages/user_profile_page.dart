@@ -1,4 +1,4 @@
-import 'package:first_app/screens/home_screen.dart';
+import 'package:first_app/screens/weather/home/weather_home_view.dart';
 import 'package:flutter/material.dart';
 import '../view/custom_profile_image_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -191,7 +191,7 @@ class _UserProfileState extends State<UserProfile> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => HomeScreen(),
+                    builder: (context) => WeatherHomeView(),
                   ),
                 );
               },
