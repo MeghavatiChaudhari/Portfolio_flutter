@@ -4,6 +4,7 @@ import '../view/custom_profile_image_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../main.dart';
 import 'package:first_app/pages/edit_profile_page.dart';
+import 'package:first_app/theme/colors.dart';
 
 class UserProfile extends StatefulWidget {
   final String nameOfPerson;
@@ -29,6 +30,7 @@ class _UserProfileState extends State<UserProfile> {
   String _gender = '';
   String _contact = '';
 
+  @override
   void initState() {
     super.initState();
     _loadProfileData();
@@ -62,159 +64,144 @@ class _UserProfileState extends State<UserProfile> {
         backgroundColor: Colors.black,
       ),
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.black, AppColors.purpleTransparent],
+            begin: Alignment.bottomLeft,
+            end: Alignment.topRight,
+            stops: [0.4, 0.7],
+            tileMode: TileMode.repeated,
+          ),
+        ),
+        child: Padding(
           padding: const EdgeInsets.all(20.0),
-          children: [
-            ProfileImage(),
-            const SizedBox(height: 20),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-              ),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Name: $_name',
-                style: TextStyle(
-                  color: Colors.black87,
-                  fontSize: 25,
-                  fontWeight: FontWeight.normal,
-                  letterSpacing: 1.0,
-                  fontFamily: 'Roboto',
-                ),
-              ),
-            ),
-            const SizedBox(height: 30),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'About Me:',
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 25,
-                      fontWeight: FontWeight.normal,
-                      letterSpacing: 1.0,
-                      fontFamily: 'Roboto',
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    _about,
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 18,
-                      letterSpacing: 1.0,
-                      fontFamily: 'Roboto',
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 30),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-              ),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Gender: $_gender',
-                style: TextStyle(
-                  color: Colors.black87,
-                  fontSize: 25,
-                  fontWeight: FontWeight.normal,
-                  letterSpacing: 1.0,
-                  fontFamily: 'Roboto',
-                ),
-              ),
-            ),
-            const SizedBox(height: 30),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-              ),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Contact No: $_contact',
-                style: TextStyle(
-                  color: Colors.black87,
-                  fontSize: 25,
-                  fontWeight: FontWeight.normal,
-                  letterSpacing: 1.0,
-                  fontFamily: 'Roboto',
-                ),
-              ),
-            ),
-            const SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: () {
+          child: ListView(
+            children: [
+              ProfileImage(),
+              const SizedBox(height: 20),
+              _buildProfileDetail('Name', _name),
+              const SizedBox(height: 30),
+              _buildProfileSection('About Me', _about),
+              const SizedBox(height: 30),
+              _buildProfileDetail('Gender', _gender),
+              const SizedBox(height: 30),
+              _buildProfileDetail('Contact No', _contact),
+              const SizedBox(height: 40),
+              _buildButton('Edit', Colors.blue, () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => EditProfile(),
                   ),
                 );
-              },
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Colors.blue, // Text color
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: const Text('Edit',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.normal,
-                    letterSpacing: 1.0,
-                    fontFamily: 'Roboto',
-                  )),
-            ),
-            const SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: () {
+              }),
+              const SizedBox(height: 40),
+              _buildButton('Goto MyWeatherApp', Colors.blue, () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => WeatherHomeView(),
                   ),
                 );
-              },
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Colors.blue, // Text color
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: const Text(
-                'Goto MyWeatherApp',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.normal,
-                  letterSpacing: 1.0,
-                  fontFamily: 'Roboto',
-                ),
-              ),
+              }),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildProfileDetail(String title, String value) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.8),
+        borderRadius: BorderRadius.circular(5),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      alignment: Alignment.centerLeft,
+      child: Text(
+        '$title: $value',
+        style: TextStyle(
+          color: Colors.black87,
+          fontSize: 20,
+          fontWeight: FontWeight.normal,
+          letterSpacing: 1.0,
+          fontFamily: 'Roboto',
+        ),
+      ),
+    );
+  }
+
+  Widget _buildProfileSection(String title, String value) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.8),
+        borderRadius: BorderRadius.circular(5),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '$title:',
+            style: TextStyle(
+              color: Colors.black87,
+              fontSize: 20,
+              fontWeight: FontWeight.normal,
+              letterSpacing: 1.0,
+              fontFamily: 'Roboto',
             ),
-          ],
+          ),
+          const SizedBox(height: 10),
+          Text(
+            value,
+            style: TextStyle(
+              color: Colors.black87,
+              fontSize: 18,
+              letterSpacing: 1.0,
+              fontFamily: 'Roboto',
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildButton(String text, Color color, VoidCallback onPressed) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white,
+        backgroundColor: color, // Text color
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+      child: Text(
+        text,
+        style: const TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.normal,
+          letterSpacing: 1.0,
+          fontFamily: 'Roboto',
         ),
       ),
     );

@@ -40,7 +40,7 @@ class _ForecastViewPageState extends State<ForecastViewPage> {
       FinalList.addAll(List<Map<String, dynamic>>.from(
           forecastInfo!['forecast']['forecastday']));
     }
-    print('processed forecast data $FinalList'); //debiug
+    print('processed forecast data $FinalList'); //debug
     if (FinalList.isNotEmpty) {
       if (index >= FinalList.length) {
         index = FinalList.length - 1;
@@ -96,6 +96,7 @@ class _ForecastViewPageState extends State<ForecastViewPage> {
                 children: [
                   SizedBox(height: 20),
                   Padding(
+                    // list of per hr data
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
                       height: 180,
@@ -222,36 +223,26 @@ class _ForecastViewPageState extends State<ForecastViewPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Navigator.push(
-                        // context,
-                        // MaterialPageRoute(
-                        // builder: (context) => ForecastViewPage(
-                        // cityname: cityWeatherModel.location!.name
-                        //     .toString(),
-                        // ),
-                        // ),
-                        // );
-                      },
-                      child: const Text("View Forecast"),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.purpleTransparent,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 30,
-                          vertical: 20,
-                        ),
-                        textStyle: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  )
+                  // const SizedBox(height: 20),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(8.0),
+                  //   child: ElevatedButton(
+                  //     onPressed: () {},
+                  //     child: const Text("View Forecast"),
+                  //     style: ElevatedButton.styleFrom(
+                  //       backgroundColor: AppColors.purpleTransparent,
+                  //       foregroundColor: Colors.white,
+                  //       padding: const EdgeInsets.symmetric(
+                  //         horizontal: 30,
+                  //         vertical: 20,
+                  //       ),
+                  //       textStyle: const TextStyle(
+                  //         fontSize: 20,
+                  //         fontWeight: FontWeight.bold,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // )
                 ],
               ),
       ),
